@@ -1,0 +1,91 @@
+[tool.poetry]
+name = "whichplates-api"
+version = "0.1.0"
+description = ""
+authors = ["Ian Day <ian@ianday.me>"]
+license = "Apache"
+readme = "README.md"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+lxml = "^4.9.2"
+fastapi = "^0.95.1"
+uvicorn = {extras = ["standard"], version = "^0.21.1"}
+which-plates = {path = "../whichPlates/dist/which_plates-0.1.0-py3-none-any.whl"}
+
+
+[tool.poetry.group.lint.dependencies]
+isort = "^5.12.0"
+black = "^23.3.0"
+flake8 = "^6.0.0"
+mypy = "^1.2.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.3.0"
+pytest-cov = "^4.0.0"
+
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.4.2"
+mkdocs-material = "^9.1.6"
+mkdocstrings = {extras = ["python"], version = "^0.21.2"}
+
+
+[tool.poetry.group.semver.dependencies]
+python-semantic-release = "^7.33.2"
+
+[tool.isor]
+profile = "black"
+
+[tool.mypy]
+# 3rd party import
+ignore_missing_imports = true
+# dynamic typing
+disallow_any_unimported = true
+disallow_any_expr = false
+disallow_any_decorated = false
+disallow_any_explicit = true
+disallow_any_generics = false
+disallow_subclassing_any = true
+# platform
+python_version = "3.10"
+# untyped
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+# None and Optional
+no_implicit_optional = true
+# Warnings
+warn_return_any = false
+warn_unreachable = true
+# Misc
+pretty = true
+
+[tool.pytest.ini_options]
+testpaths = ["src", "tests"]
+addopts = "-p no:cacheprovider" # deactivating pytest caching.
+
+[tool.coverage.report]
+exclude_lines = [
+    'if __name__ == "__main__":',
+    'def __repr__',
+    'def __str__',
+    'raise NotImplementedError'
+]
+[tool.semantic_release]
+branch = "main"
+version_variable = "src/which_plates_api/__init__.py:__version__"
+version_toml = "pyproject.toml:tool.poetry.version"
+version_source = "tag"
+commit_version_number = true
+tag_commit = true
+upload_to_pypi = false
+upload_to_release = false
+hvcs = "github"
+commit_message = "{version} [skip ci]" # skip triggering ci pipelines for version commits
