@@ -15,7 +15,7 @@ python = "^3.10"
 lxml = "^4.9.2"
 fastapi = "^0.95.1"
 uvicorn = {extras = ["standard"], version = "^0.21.1"}
-which-plates = {path = "../whichPlates/dist/which_plates-0.1.0-py3-none-any.whl"}
+which-plates = "^0.7.0"
 
 
 [tool.poetry.group.lint.dependencies]
