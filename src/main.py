@@ -5,6 +5,7 @@ from collections import defaultdict
 from fastapi import FastAPI
 from pydantic import BaseModel, conlist
 import which_plates
+from fastapi.middleware.cors import CORSMiddleware
 
 class PlateRequest(BaseModel):
     bar_weight: int
@@ -29,6 +30,12 @@ class PlateResponse(BaseModel):
     sets: list[Set]
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/calculate/", response_model=PlateResponse)
 async def calculate_plates(plate_request: PlateRequest) -> PlateResponse:
